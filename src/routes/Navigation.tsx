@@ -1,27 +1,52 @@
-import { Link, NavLink, Outlet } from 'react-router-dom';
+
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
+import { Quotes } from '../components/quotes/Quotes';
+import { Navbar } from './Navbar';
+
+import { useAppDispatch } from '../hooks/reduxHooks';
+import '../styles/index.css';
+import { useEffect } from 'react';
+import { startChecking } from '../actions/auth';
+import { PrivateRoute } from './PrivateRoutes';
+import { Favorites } from '../components/quotes/Favorites';
+import { MyQuotes } from '../components/quotes/MyQuotes';
+import { Login } from '../components/auth/Login';
+
 export const Navigation = () => {
+
+    const dispatch = useAppDispatch();
+
+    // const { checking, uid } = useAppSelector( state => state.auth);
+    // console.log(checking, !!uid, 'uid='+!!uid)
+
+    useEffect(() => {
+        dispatch(startChecking());
+    }, [dispatch])
+    
+    
     return (
         <Router>
-            <nav>
-                <NavLink to="/" end className={({ isActive }) => isActive ? 'nav-active' : ''}>Home</NavLink>
-                <NavLink to="/favorites" end className={({ isActive }) => isActive ? 'nav-active' : ''}>Mis Favoritos</NavLink>
-                <NavLink to="/myQuotes" end className={({ isActive }) => isActive ? 'nav-active' : ''}>Mi selección</NavLink>
-                <NavLink to="/search" end className={({ isActive }) => isActive ? 'nav-active' : ''}>Buscar por</NavLink>
-            </nav>
-                <Outlet />
-
-            <Routes>
-                <Route path="/" element={ <h1>Home</h1> }/>
-                    <Route path="/favorites" element={ <h1>Mis favoritos</h1> } />
-                    <Route path="/myQuotes" element={ <h1>Mis frases</h1> } />
-                    <Route path="/search" element={ <h1>Buscar por:</h1> } />
-
+            <Navbar />
+             <Routes>
+                <Route path="/" element={ <Quotes /> }/> 
+                <Route path="/favorites"  element={
+                    <PrivateRoute>
+                        <Favorites />
+                    </PrivateRoute>
+                } />
                 
-            </Routes>
+                <Route path="/myQuotes"  element={ 
+                    <PrivateRoute>
+                        <MyQuotes />
+                    </PrivateRoute>
+                 } />
+                <Route path="/search" element={ <h1>Buscar por:</h1> } /> 
+                <Route path="/login" element={ <Login /> } /> 
 
+             </Routes>
         </Router>
+
 
     )
 }

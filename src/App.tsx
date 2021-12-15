@@ -1,11 +1,13 @@
-import './index.css';
+import './styles/index.css';
 import { Navigation } from './routes/Navigation';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 function App() {
   return (
-    <>
-      <Navigation />
-    </>
+      <Provider store={ store }>
+        <Navigation />
+      </Provider>
   );
 }
 

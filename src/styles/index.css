@@ -3,8 +3,18 @@ html,body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  background-color: #282c34;
-  color: white;
+  /* background-color: #9da5b4;
+  color: white; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.nav-active {
+  color: grey;
+  transition: all .3s ease-out;
+}
+
+
+.spaceBetween {
+  margin: 5px;
 }
