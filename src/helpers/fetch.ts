@@ -16,6 +16,7 @@ const fetchSinToken = ( endpoint: string, data?: any, method: string = 'GET' ) =
                 'Content-type': 'application/json'
             },
             body: JSON.stringify( data )
+            
             //tengo que anexar el body como un json screen
         } );
     }

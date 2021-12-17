@@ -12,18 +12,20 @@ import { PrivateRoute } from './PrivateRoutes';
 import { Favorites } from '../components/quotes/Favorites';
 import { MyQuotes } from '../components/quotes/MyQuotes';
 import { Login } from '../components/auth/Login';
+import { FormQuotes } from '../components/quotes/FormQuotes';
 
 export const Navigation = () => {
 
     const dispatch = useAppDispatch();
 
-    // const { checking, uid } = useAppSelector( state => state.auth);
+    //  const { checking, uid } = useAppSelector( state => state.auth);
     // console.log(checking, !!uid, 'uid='+!!uid)
 
     useEffect(() => {
         dispatch(startChecking());
     }, [dispatch])
     
+
     
     return (
         <Router>
@@ -39,6 +41,11 @@ export const Navigation = () => {
                 <Route path="/myQuotes"  element={ 
                     <PrivateRoute>
                         <MyQuotes />
+                    </PrivateRoute>
+                 } />
+                <Route path="/manageMyQuotes"  element={ 
+                    <PrivateRoute>
+                        <FormQuotes />
                     </PrivateRoute>
                  } />
                 <Route path="/search" element={ <h1>Buscar por:</h1> } /> 

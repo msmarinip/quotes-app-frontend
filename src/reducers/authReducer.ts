@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export type AuthAction =
        { uid: string; displayName: string } 
 
+// export type AuthPayload = { payload: AuthAction; }
 
 
 export interface AuthState {
@@ -12,9 +13,9 @@ export interface AuthState {
 }
 
 const initialState: AuthState  = {
-    checking: true
-    // uid: null,
-    // name: ''
+    checking: true,
+    uid: '',
+    name: ''
 }
 
 
@@ -42,7 +43,7 @@ export const authReducer = createSlice({
   })
   
   // Action creators are generated for each case reducer function
-   export const { login, checkingFinish } = authReducer.actions
+   export const { login, checkingFinish, logout } = authReducer.actions
   
    export default authReducer.reducer
 

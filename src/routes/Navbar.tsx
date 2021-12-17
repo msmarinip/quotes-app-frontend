@@ -1,15 +1,26 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/es';
-import { useAppSelector } from '../hooks/reduxHooks';
+import {  useAppSelector } from '../hooks/reduxHooks';
 import { NavbarTop } from './NavbarTop';
+import { useEffect } from 'react';
 
 
 
 export const Navbar = () => {
 
-    const { uid, checking } = useAppSelector( state => state.auth);
-  
+    let location =  useLocation()
+    useEffect(() => {
+        (location.pathname !== '/login')
+            && localStorage.setItem('lastPath', location.pathname);    
+        console.log(location)    
+    }, [location])
+
+
+
+    const { uid, checking, name } = useAppSelector( state => state.auth);
+
+
     if(checking) return <h5>Espere...</h5>
 
     const activeLink = (isActive: Boolean) => {
@@ -31,7 +42,7 @@ export const Navbar = () => {
 
                 <div className="offcanvas offcanvas-start" tabIndex={-1} id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                 <div className="offcanvas-header">
-                    <span className="offcanvas-title" id="offcanvasNavbarLabel">{ date }</span>
+                    <span className="offcanvas-title" id="offcanvasNavbarLabel">{name}<br /> { date }</span>
                     <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 
@@ -39,8 +50,9 @@ export const Navbar = () => {
 
                     <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                         { menuItmes('/','Home') }
-                        { (!!uid) && menuItmes('/favorites','Favoritos') }
+                        { (!!uid) && menuItmes('/favorites','Mis Favoritos') }
                         { (!!uid) && menuItmes('/myQuotes','Mi selección') }
+                        { (!!uid) && menuItmes('/manageMyQuotes','Agregar') }
                         { menuItmes('/search','Buscar por autor') }
                     </ul>
         
